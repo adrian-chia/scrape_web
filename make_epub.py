@@ -90,8 +90,6 @@ def determine_output_filename(inputs, output_arg):
 
 def format_book_title(raw_title):
     """Format title by removing hyphens/underscores and applying Title Case."""
-    if raw_title == "a-record-of-a-mortals-journey-to-immortality":
-        return "A Record of a Mortal's Journey to Immortality"
     clean_title = raw_title.replace("-", " ").replace("_", " ")
     stop_words = {"a", "an", "the", "and", "but", "or", "for", "nor", "on", "at", "to", "from", "by", "of", "in"}
     words = clean_title.split()
