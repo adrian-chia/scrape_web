@@ -95,18 +95,33 @@ def scrape_chapter(url, output_dir):
         
         if heading:
             raw_title = heading.text.strip()
-            m = re.search(r'(?i)(chapters?\s+\d+.*?)(?:\s*[-|]\s*|$)', raw_title)
-            if m:
-                title_text = m.group(1).strip()
+            # Improved logic for the new issue while keeping existing method fallback
+            clean_title = re.sub(r'(?i)\s*[-|]\s*(Novel\s*Fire|Read.*Free|Online).*$', '', raw_title)
+            m_full = re.search(r'(?i)(chapters?\s+\d+.*)', clean_title)
+            
+            if m_full and re.search(r'[-|—]', clean_title):
+                title_text = m_full.group(1).strip()
             else:
-                title_text = raw_title
+                m = re.search(r'(?i)(chapters?\s+\d+.*?)(?:\s*[-|]\s*|$)', raw_title)
+                if m:
+                    title_text = m.group(1).strip()
+                else:
+                    title_text = raw_title
         elif soup.title and soup.title.text:
-            # Fallback to the page's <title> tag
-            m = re.search(r'(?i)(chapters?\s+\d+.*?)(?:\s*[-|]\s*|$)', soup.title.text)
-            if m:
-                title_text = m.group(1).strip()
+            raw_title = soup.title.text.strip()
+            # Improved logic for the new issue while keeping existing method fallback
+            clean_title = re.sub(r'(?i)\s*[-|]\s*(Novel\s*Fire|Read.*Free|Online).*$', '', raw_title)
+            m_full = re.search(r'(?i)(chapters?\s+\d+.*)', clean_title)
+            
+            if m_full and re.search(r'[-|—]', clean_title):
+                title_text = m_full.group(1).strip()
             else:
-                title_text = soup.title.text.strip()
+                # Fallback to the page's <title> tag
+                m = re.search(r'(?i)(chapters?\s+\d+.*?)(?:\s*[-|]\s*|$)', raw_title)
+                if m:
+                    title_text = m.group(1).strip()
+                else:
+                    title_text = raw_title
 
         # Clean up redundant strings like "[ ... words ]" from the title
         if title_text:
