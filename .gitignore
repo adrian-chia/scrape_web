@@ -221,6 +221,7 @@ __marimo__/
 # Novel content (large scraped content - not versioned)
 */
 *.epub
+OLD/
 
 # macOS
 .DS_Store
@@ -233,3 +234,7 @@ __marimo__/
 
 #mcp
 .mcp.json
+
+logs/
+
+TEST_URL.md
