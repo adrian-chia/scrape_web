@@ -238,3 +238,9 @@ OLD/
 logs/
 
 TEST_URL.md
+
+# Allow specific CSVs in the data directory
+!data/
+!data/nasdaq_holidays.csv
+!data/finra_holidays.csv
+!data/fed_holidays.csv
